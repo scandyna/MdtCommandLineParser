@@ -1,6 +1,130 @@
 # MdtCommandLineParser
 
-Library to help to create a command-line parser in a C++ application
+## Description
+
+Library to help to create a command-line parser in a C++ application.
+
+Key points:
+* Parser based on a C++ definition
+* Support for sub-command (1 level)
+* Support for Bash TAB completion (generated from the definition)
+
+C++ does not offer native command-line arguments parsing built-in.
+
+A portable solution is to use [QCommandLineParser](https://doc.qt.io/qt-6/qcommandlineparser.html),
+which does the job well, but has some missing features:
+* No built-in support for the concept of sub-command
+* Mixing the parser definition into the parser make the API a bit confusing
+* No support for Bash TAB completion built-in
+
+## Usage
+
+A example of code is available in the [API documentaion](https://scandyna.gitlab.io/mdtcommandlineparser).
+
+## CMake project description
+
+Update your CMakeLists.txt to use the required libraries:
+```cmake
+cmake_minimum_required(VERSION 3.15)
+project(MyApp)
+
+find_package(Threads REQUIRED)
+find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Mdt0 REQUIRED COMPONENTS CommandLineParser )
+
+add_executable(myApp myApp.cpp)
+target_link_libraries(myApp Mdt0::CommandLineParser)
+```
+
+## Project using Conan
+
+If you use [Conan](https://conan.io/),
+add MdtCommandLineParser as requirement in your `conanfile.txt`:
+```conan
+[requires]
+MdtCommandLineParser/x.y.z@scandyna/testing
+
+[generators]
+CMakeDeps
+CMakeToolchain
+VirtualBuildEnv
+```
+
+Add the remote:
+```bash
+conan remote add gitlab https://gitlab.com/api/v4/projects/25668674/packages/conan
+```
+
+Install the dependencies:
+```bash
+mkdir build && cd build
+conan install .. --profile your_profile -s build_type=Debug
+```
+
+If you don't use the native compiler,
+and your Conan profile defines one
+(or it defines some other environments),
+bring the required environment to the current shell:
+```bash
+source conanbuild.sh
+```
+On Windows:
+```bash
+.\conanbuild.bat
+```
+
+Configure your project:
+```bash
+cmake -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug ..
+```
+
+Maybe adjust some settings:
+```bash
+cmake-gui .
+```
+
+Build:
+```bash
+cmake --build . --config Debug
+```
+
+To run the tests:
+```bash
+ctest --output-on-failure -C Debug
+```
+
+If applicable, restore the previous shell environment:
+```bash
+source deactivate_conanbuild.sh
+```
+On Windows:
+```bash
+.\deactivate_conanbuild.bat
+```
+
+For a list of available packages, and also some other details,
+see [Conan packages README](packaging/conan/README.md).
+
+## Manual install
+
+It is also possible to install MdtCommandLineParser locally.
+See [INSTALL](INSTALL.md).
+
+Then, configure your project and specify
+the path of the installed MdtCommandLineParser and the dependencies:
+```bash
+cmake -DCMAKE_PREFIX_PATH="/some/path/MdtCommandLineParser;/some/path/MdtCMakeConfig;/some/path/MdtCMakeModules;/some/path/qt/Qt5/5.15.2/gcc_64" ..
+```
+
+# Work on MdtCommandLineParser
+
+## Build
+
+See [BUILD](BUILD.md).
+
+## Create Conan package
+
+See [README](packaging/conan/README.md) in the conan packaging folder.
 
 ---
 
@@ -11,23 +135,11 @@ When you're ready to make this README your own, just edit this file and use the 
 ## Suggestions for a good README
 Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
 
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
 ## Badges
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
 
 ## Visuals
 Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
 ## Support
 Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
