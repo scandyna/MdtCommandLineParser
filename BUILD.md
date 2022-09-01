@@ -180,7 +180,7 @@ conan install --profile:build linux_gcc8_x86_64 --profile:host linux_gcc8_x86_64
 
 Configure MdtCommandLineParser:
 ```bash
-cmake -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_CPP_API_DOC=ON ..
+cmake -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_DOCS=ON ..
 ```
 
 Build:
@@ -194,6 +194,6 @@ reason why it is separate.
 
 Install the dependencies as above, then:
 ```bash
-cmake -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_CPP_API_DOC=ON -DBUILD_EXAMPLES=ON ..
+cmake -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_DOCS=ON -DBUILD_EXAMPLES=ON ..
 make documentation-dev
 ```
