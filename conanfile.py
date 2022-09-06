@@ -34,4 +34,4 @@ class MdtCommandLineParserConan(ConanFile):
     # version ranges are not possible.
     # See https://gitlab.com/gitlab-org/gitlab/-/issues/333638
     self.tool_requires("catch2/2.13.9", force_host_context=True)
-    self.tool_requires("MdtCMakeModules/0.18.3@scandyna/testing", force_host_context=True)
+    self.tool_requires("MdtCMakeModules/0.19.0@scandyna/testing", force_host_context=True)
