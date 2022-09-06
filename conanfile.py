@@ -21,6 +21,8 @@ class MdtCommandLineParserConan(ConanFile):
 
   def requirements(self):
     self.requires("qt/5.15.2")
+    self.requires("MdtCommandLineArguments/0.4.1@scandyna/testing")
+
 
   # When using --profile:build xx and --profile:host xx ,
   # the dependencies declared in build_requires and tool_requires
