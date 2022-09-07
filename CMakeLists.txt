@@ -103,7 +103,9 @@ find_package(Mdt0 COMPONENTS CommandLineArguments REQUIRED)
 # CommandLineParser uses Boost optional
 # For header only library,no component is defined.
 # https://cmake.org/pipermail/cmake/2013-September/055941.html
+# Looking in Conan-IO's recipe test_package, it's the same
 find_package(Boost REQUIRED)
+message(VERBOSE "Boost_VERSION: ${Boost_VERSION}")
 
 
 if(BUILD_TESTS)

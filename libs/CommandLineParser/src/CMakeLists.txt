@@ -73,7 +73,7 @@ endif()
 target_link_libraries(Mdt_CommandLineParser
   PUBLIC
     Qt5::Core
-    Boost::boost
+    Boost::headers
 )
 
 target_include_directories(Mdt_CommandLineParser
