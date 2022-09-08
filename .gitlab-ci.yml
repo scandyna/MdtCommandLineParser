@@ -1,3 +1,4 @@
 
 include:
+  - local: 'ci_cd/BuildAndTest_Linux.yml'
   - local: 'ci_cd/GitLab/SAST.yml'
