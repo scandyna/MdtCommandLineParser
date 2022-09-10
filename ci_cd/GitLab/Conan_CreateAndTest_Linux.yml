@@ -2,6 +2,11 @@
 include:
   - local: 'ci_cd/GitLab/Conan_Templates.yml'
 
+
+########################################
+# Linux Gcc 8 x86_64
+########################################
+
 .conan_createAndTest_CommandLineParser_linux_gcc8_x86_64:
   image: registry.gitlab.com/scandyna/docker-images-ubuntu/ubuntu-20.04-xserver-build-tools:latest
   variables:
@@ -19,3 +24,21 @@ conan_createAndTest_CommandLineParser_linux_gcc8_x86_64_Release:
   variables:
     BUILD_TYPE: Release
   extends: .conan_createAndTest_CommandLineParser_linux_gcc8_x86_64
+
+
+########################################
+# Linux Clang 6.0 x86_64 libc++
+########################################
+
+.conan_createAndTest_CommandLineParser_linux_clang6.0_x86_64_libcxx:
+  image: registry.gitlab.com/scandyna/docker-images-ubuntu/ubuntu-20.04-xserver-build-tools:latest
+  variables:
+    COMPONENT: CommandLineParser
+    CONAN_PROFILE_BUILD: linux_clang6.0_x86_64_libc++
+    CONAN_PROFILE_HOST: linux_clang6.0_x86_64_libc++_qt_widgets_modules_boost
+  extends: .conan_createAndTest
+
+conan_createAndTest_CommandLineParser_linux_gcc8_x86_64_Release:
+  variables:
+    BUILD_TYPE: Release
+  extends: .conan_createAndTest_CommandLineParser_linux_clang6.0_x86_64_libcxx

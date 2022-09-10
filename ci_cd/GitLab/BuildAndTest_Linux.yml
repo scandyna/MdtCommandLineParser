@@ -4,7 +4,7 @@ include:
   - local: 'ci_cd/GitLab/BuildAndTest_Templates.yml'
 
 ########################################
-# Linux Gcc 8 X86_64
+# Linux Gcc 8 x86_64
 ########################################
 
 .buildAndTest_Linux_gcc8_x86_64:
@@ -49,3 +49,51 @@ test_linux_gcc8_x86_64_release:
   dependencies:
     - build_linux_gcc8_x86_64_release
   needs: ["build_linux_gcc8_x86_64_release"]
+
+
+########################################
+# Linux Clang 6.0 x86_64 libc++
+########################################
+
+.buildAndTest_Linux_clang6.0_x86_64_libcxx:
+  image: registry.gitlab.com/scandyna/docker-images-ubuntu/ubuntu-20.04-xserver-build-tools:latest
+  variables:
+    CONAN_PROFILE_BUILD: linux_clang6.0_x86_64_libc++
+    CONAN_PROFILE_HOST: linux_clang6.0_x86_64_libc++_qt_widgets_modules_boost
+    BUILD_SHARED_LIBS: "True"
+
+
+build_linux_clang6.0_x86_64_libcxx_Debug:
+  variables:
+    BUILD_TYPE: Debug
+  extends:
+    - .buildAndTest_Linux_clang6.0_x86_64_libcxx
+    - .build_linux
+
+test_linux_gcc8_x86_64_Debug:
+  variables:
+    BUILD_TYPE: Debug
+  extends:
+    - .buildAndTest_Linux_clang6.0_x86_64_libcxx
+    - .test_linux
+  dependencies:
+    - build_linux_clang6.0_x86_64_libcxx_Debug
+  needs: ["build_linux_clang6.0_x86_64_libcxx_Debug"]
+
+
+build_linux_clang6.0_x86_64_libcxx_Release:
+  variables:
+    BUILD_TYPE: Release
+  extends:
+    - .buildAndTest_Linux_clang6.0_x86_64_libcxx
+    - .build_linux
+
+test_linux_gcc8_x86_64_Release:
+  variables:
+    BUILD_TYPE: Release
+  extends:
+    - .buildAndTest_Linux_clang6.0_x86_64_libcxx
+    - .test_linux
+  dependencies:
+    - build_linux_clang6.0_x86_64_libcxx_Release
+  needs: ["build_linux_clang6.0_x86_64_libcxx_Release"]
