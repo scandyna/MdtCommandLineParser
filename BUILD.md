@@ -175,7 +175,7 @@ otherwise the graph will be empty.
 
 Install the dependencies:
 ```bash
-conan install --profile:build linux_gcc8_x86_64 --profile:host linux_gcc8_x86_64_qt_widgets_modules -s build_type=Debug ..
+conan install --profile:build linux_gcc8_x86_64 --profile:host linux_gcc8_x86_64_qt_widgets_modules_boost -s build_type=Debug ..
 ```
 
 Configure MdtCommandLineParser:
