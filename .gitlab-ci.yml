@@ -5,4 +5,4 @@ include:
   - local: 'ci_cd/GitLab/SAST.yml'
   - local: 'ci_cd/GitLab/Doc.yml'
   - local: 'ci_cd/GitLab/Release.yml'
-  - local: 'ci_cd/GitLab/Deploy_Conan.yml'
+  #- local: 'ci_cd/GitLab/Deploy_Conan.yml'
