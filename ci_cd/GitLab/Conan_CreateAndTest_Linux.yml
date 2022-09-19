@@ -8,11 +8,11 @@ include:
 ########################################
 
 .conan_createAndTest_CommandLineParser_linux_gcc8_x86_64:
-  image: registry.gitlab.com/scandyna/docker-images-ubuntu/ubuntu-20.04-xserver-build-tools:latest
+  image: registry.gitlab.com/scandyna/docker-images-ubuntu/ubuntu-18.04-gcc-8:latest
   variables:
     COMPONENT: CommandLineParser
     CONAN_PROFILE_BUILD: linux_gcc8_x86_64
-    CONAN_PROFILE_HOST: linux_gcc8_x86_64_qt_widgets_modules_boost
+    CONAN_PROFILE_HOST: linux_ubuntu-18.04_gcc8_x86_64_qt_widgets_modules_boost
   extends: .conan_createAndTest
 
 conan_createAndTest_CommandLineParser_linux_gcc8_x86_64_Debug:
@@ -31,11 +31,11 @@ conan_createAndTest_CommandLineParser_linux_gcc8_x86_64_Release:
 ########################################
 
 .conan_createAndTest_CommandLineParser_linux_clang10_x86_64_libcxx:
-  image: registry.gitlab.com/scandyna/docker-images-ubuntu/ubuntu-20.04-xserver-build-tools:latest
+  image: registry.gitlab.com/scandyna/docker-images-ubuntu/ubuntu-18.04-clang-10:latest
   variables:
     COMPONENT: CommandLineParser
     CONAN_PROFILE_BUILD: linux_clang10_x86_64_libc++
-    CONAN_PROFILE_HOST: linux_clang10_x86_64_libc++_qt_widgets_modules_boost
+    CONAN_PROFILE_HOST: linux_ubuntu-18.04_clang10_x86_64_libc++_qt_widgets_modules_boost
   extends: .conan_createAndTest
 
 conan_createAndTest_CommandLineParser_linux_clang10_x86_64_libcxx_Release:
