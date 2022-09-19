@@ -3,6 +3,6 @@ include:
   - local: 'ci_cd/GitLab/BuildAndTest_Linux.yml'
   - local: 'ci_cd/GitLab/Conan_CreateAndTest_Linux.yml'
   - local: 'ci_cd/GitLab/SAST.yml'
-  - local: 'ci_cd/GitLab/Coc.yml'
+  - local: 'ci_cd/GitLab/Doc.yml'
   - local: 'ci_cd/GitLab/Release.yml'
   - local: 'ci_cd/GitLab/Deploy_Conan.yml'
