@@ -29,6 +29,7 @@ Tools and libraries that are managed by Conan:
  - Boost
  - [MdtCMakeModules](https://gitlab.com/scandyna/mdt-cmake-modules)
  - [MdtCMakeConfig](https://gitlab.com/scandyna/mdtcmakeconfig)
+ - MdtCommandLineArguments from [MdtApplication](https://gitlab.com/scandyna/mdtapplication)
 
 ## Get the source code
 
@@ -84,11 +85,19 @@ Some of those recommend to specify the build and host profile:
 conan install --profile:build $CONAN_PROFILE --profile:host $CONAN_PROFILE -s build_type=$BUILD_TYPE --build=missing ..
 ```
 
-Currently, specify both profiles can fail for some packages.
-In that case, try to specify only one:
+Some packages have build requirements.
+Those build requirements don't have to be build in Debug mode for example.
+The same is true for some options.
+To avoid building those build requirements unnecessarily,
+specify a build profile that has more chances to match [Conan center](https://conan.io/center)'s available packages,
+as well as a Release build:
 ```bash
-conan install --profile $CONAN_PROFILE -s build_type=$BUILD_TYPE --build=missing ..
+conan install --profile:build $CONAN_PROFILE --profile:host $CONAN_PROFILE --settings:build build_type=Release --settings:host build_type=$BUILD_TYPE --options:host shared=$BUILD_SHARED_LIBS --build=missing ..
 ```
+
+Currently, specify both profiles can fail for some packages,
+but the [conan-center-index](https://github.com/conan-io/conan-center-index) team seems to work on fixing that.
+
 
 The new CMakeToolchain generator creates a `conan_toolchain.cmake` which will be passed to CMake:
 ```bash
@@ -131,7 +140,7 @@ This is a example on Linux using gcc.
 
 Install the dependencies:
 ```bash
-conan install --profile:build linux_gcc8_x86_64 --profile:host linux_gcc8_x86_64_qt_widgets_modules_boost -s build_type=Debug ..
+conan install --profile:build linux_gcc8_x86_64 --profile:host linux_ubuntu-18.04_gcc8_x86_64_qt_widgets_modules_boost --settings:build build_type=Release --settings:host build_type=Debug --build=missing ..
 ```
 
 Configure MdtCommandLineParser:
@@ -175,11 +184,12 @@ otherwise the graph will be empty.
 
 Install the dependencies:
 ```bash
-conan install --profile:build linux_gcc8_x86_64 --profile:host linux_gcc8_x86_64_qt_widgets_modules_boost -s build_type=Debug ..
+conan install --profile:build linux_gcc8_x86_64 --profile:host linux_ubuntu-18.04_gcc8_x86_64_qt_widgets_modules_boost -s build_type=Debug ..
 ```
 
 Configure MdtCommandLineParser:
 ```bash
+source conanbuild.sh
 cmake -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Debug -DBUILD_DOCS=ON ..
 ```
 
