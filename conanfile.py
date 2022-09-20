@@ -20,7 +20,7 @@ class MdtCommandLineParserConan(ConanFile):
   no_copy_source = True
 
   def requirements(self):
-    self.requires("qt/5.15.2")
+    self.requires("qt/5.15.6")
     self.requires("boost/1.72.0")
     self.requires("MdtCommandLineArguments/0.4.1@scandyna/testing")
 
