@@ -1,1 +1,73 @@
- 
+
+include:
+  - local: 'ci_cd/GitLab/Common.yml'
+  - local: 'ci_cd/GitLab/Conan_Templates.yml'
+
+###########################################
+# Linux Ubuntu 18.04 Gcc 8
+###########################################
+
+.Deploy_Conan_Linux_Gcc_Matrix:
+  extends: .deploy_conan_base
+  script:
+    - conan create packaging/conan/$COMPONENT scandyna/testing
+      --profile:build "linux_${CONAN_PROFILE_COMPILER}_x86_64"
+      --profile:host "linux_ubuntu-18.04_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_qt_widgets_modules"
+      -s build_type=$BUILD_TYPE
+      -o Mdt$COMPONENT:shared=$BUILD_SHARED_LIBS
+    - conan user --password "${CI_JOB_TOKEN}" --remote scandyna ci_user
+    - conan upload Mdt$COMPONENT/* --remote scandyna --all -c
+
+Deploy_Conan_Linux_Gcc:
+  extends: .Deploy_Conan_Linux_Gcc_Matrix
+  image: registry.gitlab.com/scandyna/docker-images-ubuntu/ubuntu-18.04-gcc-8:latest
+  parallel:
+    matrix:
+      - COMPONENT:
+          - CommandLineParser
+        CONAN_PROFILE_COMPILER:
+          - gcc8
+        CONAN_PROFILE_ARCH:
+          - x86_64
+        BUILD_TYPE:
+          - Debug
+          - Release
+        BUILD_SHARED_LIBS:
+          - "True"
+          - "False"
+
+
+#############################################
+# Deploy Conan - Linux Ubuntu 18.04 Clang 10
+#############################################
+
+.Deploy_Conan_Linux_Clang_Matrix:
+  extends: .deploy_conan_base
+  script:
+    - conan create packaging/conan/$COMPONENT scandyna/testing
+      --profile:build "linux_${CONAN_PROFILE_COMPILER}_x86_64_libc++"
+      --profile:host "linux_ubuntu-18.04_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_${CONAN_PROFILE_LIBCXX}_qt_widgets_modules"
+      -s build_type=$BUILD_TYPE
+      -o Mdt$COMPONENT:shared=$BUILD_SHARED_LIBS
+    - conan user --password "${CI_JOB_TOKEN}" --remote scandyna ci_user
+    - conan upload Mdt$COMPONENT/* --remote scandyna --all -c
+
+Deploy_Conan_Linux_Clang:
+  extends: .Deploy_Conan_Linux_Clang_Matrix
+  image: registry.gitlab.com/scandyna/docker-images-ubuntu/ubuntu-18.04-clang-10:latest
+  parallel:
+    matrix:
+      - COMPONENT:
+          - CommandLineParser
+        CONAN_PROFILE_COMPILER:
+          - clang10
+        CONAN_PROFILE_ARCH:
+          - x86_64
+        CONAN_PROFILE_LIBCXX:
+          - libc++
+        BUILD_TYPE:
+          - Debug
+          - Release
+        BUILD_SHARED_LIBS:
+          - "True"
+          - "False"
