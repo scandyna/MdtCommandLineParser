@@ -84,7 +84,9 @@ if(MSVC)
     add_compile_options(/WX)
   endif()
   # C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead (which not works with gcc/clang)
-#   add_compile_options(/wd4996)
+  # TODO: this warning has sense. Re-enable once MdtApplication is fixed.
+  # See: https://gitlab.com/scandyna/mdtapplication/-/issues/3
+  add_compile_options(/wd4996)
 else()
   add_compile_options(-Wall -Wextra -Wpedantic -Wconversion -Wunused)
   if(WARNING_AS_ERROR)
