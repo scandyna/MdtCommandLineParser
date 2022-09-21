@@ -71,3 +71,74 @@ Deploy_Conan_Linux_Clang:
         BUILD_SHARED_LIBS:
           - "True"
           - "False"
+
+
+###########################################
+# Deploy Conan - Windows Gcc
+###########################################
+
+.Deploy_Conan_Windows_Gcc_Matrix:
+  extends:
+    - .deploy_conan_base
+    - .windows_runner
+  script:
+    - conan create packaging/conan/$COMPONENT scandyna/testing
+      --profile:build "windows_${CONAN_PROFILE_COMPILER}_x86_64"
+      --profile:host "windows_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_qt_widgets_modules_boost"
+      -s build_type=$BUILD_TYPE
+      -o "Mdt${COMPONENT}:shared=$BUILD_SHARED_LIBS"
+    - conan user --password "${CI_JOB_TOKEN}" --remote scandyna ci_user
+    - conan upload Mdt$COMPONENT/* --remote scandyna --all -c
+
+Deploy_Conan_Windows_Gcc:
+  extends: .Deploy_Conan_Windows_Gcc_Matrix
+  image: registry.gitlab.com/scandyna/docker-images-windows/windows-cpp-win64_mingw81:latest
+  parallel:
+    matrix:
+      - COMPONENT:
+          - CommandLineParser
+        CONAN_PROFILE_COMPILER:
+          - gcc8
+        CONAN_PROFILE_ARCH:
+          - x86_64
+        BUILD_TYPE:
+          - Debug
+          - Release
+        BUILD_SHARED_LIBS:
+          - "True"
+          - "False"
+
+###########################################
+# Deploy Conan - Windows MSVC
+###########################################
+
+.Deploy_Conan_Windows_Msvc_Matrix:
+  extends:
+    - .deploy_conan_base
+    - .windows_runner
+  script:
+    - conan create packaging/conan/$COMPONENT scandyna/testing
+      --profile:build "windows_${CONAN_PROFILE_COMPILER}_x86_64"
+      --profile:host "windows_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_qt_widgets_modules_boost"
+      -s build_type=$BUILD_TYPE
+      -o "Mdt${COMPONENT}:shared=$BUILD_SHARED_LIBS"
+    - conan user --password "${CI_JOB_TOKEN}" --remote scandyna ci_user
+    - conan upload Mdt$COMPONENT/* --remote scandyna --all -c
+
+Deploy_Conan_Windows_Msvc:
+  extends: .Deploy_Conan_Windows_Msvc_Matrix
+  image: registry.gitlab.com/scandyna/docker-images-windows/windows-cpp-msvc2019:latest
+  parallel:
+    matrix:
+      - COMPONENT:
+          - CommandLineParser
+        CONAN_PROFILE_COMPILER:
+          - msvc16
+        CONAN_PROFILE_ARCH:
+          - x86_64
+        BUILD_TYPE:
+          - Debug
+          - Release
+        BUILD_SHARED_LIBS:
+          - "True"
+          - "False"
