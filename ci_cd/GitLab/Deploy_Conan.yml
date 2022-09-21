@@ -12,7 +12,7 @@ include:
   script:
     - conan create packaging/conan/$COMPONENT scandyna/testing
       --profile:build "linux_${CONAN_PROFILE_COMPILER}_x86_64"
-      --profile:host "linux_ubuntu-18.04_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_qt_widgets_modules"
+      --profile:host "linux_ubuntu-18.04_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_qt_widgets_modules_boost"
       -s build_type=$BUILD_TYPE
       -o Mdt$COMPONENT:shared=$BUILD_SHARED_LIBS
     - conan user --password "${CI_JOB_TOKEN}" --remote scandyna ci_user
@@ -46,7 +46,7 @@ Deploy_Conan_Linux_Gcc:
   script:
     - conan create packaging/conan/$COMPONENT scandyna/testing
       --profile:build "linux_${CONAN_PROFILE_COMPILER}_x86_64_libc++"
-      --profile:host "linux_ubuntu-18.04_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_${CONAN_PROFILE_LIBCXX}_qt_widgets_modules"
+      --profile:host "linux_ubuntu-18.04_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_${CONAN_PROFILE_LIBCXX}_qt_widgets_modules_boost"
       -s build_type=$BUILD_TYPE
       -o Mdt$COMPONENT:shared=$BUILD_SHARED_LIBS
     - conan user --password "${CI_JOB_TOKEN}" --remote scandyna ci_user
