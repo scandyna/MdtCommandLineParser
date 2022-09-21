@@ -70,3 +70,31 @@ include:
 .test_linux:
   extends:
     - .test_base
+
+
+.build_windows:
+  stage: build
+  rules:
+    - !reference [.buildAndTest_rules, rules]
+  extends:
+    - .windows_runner
+  before_script:
+    - !reference [.setup_conan, script]
+  script:
+    - mkdir build
+    - cd build
+    - conan install --profile:build $CONAN_PROFILE_BUILD --profile:host $CONAN_PROFILE_HOST -s build_type=$BUILD_TYPE -o shared=$BUILD_SHARED_LIBS ..
+    - .\conanbuild
+    - !reference [.cmake_configure, script]
+    - cmake --build . --config $BUILD_TYPE -j4
+    - .\deactivate_conanbuild
+  artifacts:
+    when: always
+    expire_in: 1 day
+    paths:
+      - build
+
+.test_windows:
+  extends:
+    - .test_base
+    - .windows_runner
