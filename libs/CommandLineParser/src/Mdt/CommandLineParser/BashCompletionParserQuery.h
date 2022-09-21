@@ -1,21 +1,21 @@
 /****************************************************************************
  **
- ** Copyright (C) 2011-2021 Philippe Steinmann.
+ ** Copyright (C) 2011-2022 Philippe Steinmann.
  **
- ** This file is part of MdtApplication library.
+ ** This file is part of MdtCommandLineParser library.
  **
- ** MdtApplication is free software: you can redistribute it and/or modify
+ ** MdtCommandLineParser is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU Lesser General Public License as published by
  ** the Free Software Foundation, either version 3 of the License, or
  ** (at your option) any later version.
  **
- ** MdtApplication is distributed in the hope that it will be useful,
+ ** MdtCommandLineParser is distributed in the hope that it will be useful,
  ** but WITHOUT ANY WARRANTY; without even the implied warranty of
  ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  ** GNU Lesser General Public License for more details.
  **
  ** You should have received a copy of the GNU Lesser General Public License
- ** along with MdtApplication.  If not, see <http://www.gnu.org/licenses/>.
+ ** along with MdtCommandLineParser.  If not, see <http://www.gnu.org/licenses/>.
  **
  ****************************************************************************/
 #ifndef MDT_COMMAND_LINE_PARSER_BASH_COMPLETION_PARSER_QUERY_H
@@ -160,17 +160,13 @@ namespace Mdt{ namespace CommandLineParser{
      */
     BashCompletionParserQuery(const BashCompletionParserQuery & other) = default;
 
-    /*! \brief Copy assign \a other to this query
-     */
-    BashCompletionParserQuery & operator=(const BashCompletionParserQuery & other) = default;
+    BashCompletionParserQuery & operator=(const BashCompletionParserQuery & other) = delete;
 
     /*! \brief Move construct a query from \a other
      */
     BashCompletionParserQuery(BashCompletionParserQuery && other) noexcept = default;
 
-    /*! \brief Move assign \a other to this query
-     */
-    BashCompletionParserQuery & operator=(BashCompletionParserQuery && other) noexcept = default;
+    BashCompletionParserQuery & operator=(BashCompletionParserQuery && other) noexcept = delete;
 
     /*! \brief Get the count of arguments in the command line
      *
