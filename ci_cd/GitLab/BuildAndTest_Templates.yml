@@ -45,6 +45,7 @@ include:
       --profile:build $CONAN_PROFILE_BUILD --profile:host $CONAN_PROFILE_HOST
       --settings:build build_type=Release --settings:host build_type=$BUILD_TYPE
       --options:host shared=$BUILD_SHARED_LIBS
+      ..
     - source conanbuild.sh || true  # Workaround to https://gitlab.com/gitlab-org/ci-cd/pipeline-authoring-stack-rank/-/issues/1
     - !reference [.cmake_configure, script]
     - cmake --build . --config $BUILD_TYPE -j4
@@ -68,6 +69,7 @@ include:
       --profile:build $CONAN_PROFILE_BUILD --profile:host $CONAN_PROFILE_HOST
       --settings:build build_type=Release --settings:host build_type=$BUILD_TYPE
       --options:host shared=$BUILD_SHARED_LIBS
+      ..
     - ctest --output-on-failure -C $BUILD_TYPE
   artifacts:
     when: on_failure
@@ -96,6 +98,7 @@ include:
       --profile:build $CONAN_PROFILE_BUILD --profile:host $CONAN_PROFILE_HOST
       --settings:build build_type=Release --settings:host build_type=$BUILD_TYPE
       --options:host shared=$BUILD_SHARED_LIBS
+      ..
     - .\conanbuild
     - !reference [.cmake_configure, script]
     - cmake --build . --config $BUILD_TYPE -j4
