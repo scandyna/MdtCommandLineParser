@@ -13,7 +13,8 @@ include:
     - conan create packaging/conan/$COMPONENT scandyna/testing
       --profile:build "linux_${CONAN_PROFILE_COMPILER}_x86_64"
       --profile:host "linux_ubuntu-18.04_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_qt_widgets_modules_boost"
-      -s build_type=$BUILD_TYPE
+      #-s build_type=$BUILD_TYPE
+      --settings:build build_type=Release --settings:host build_type=$BUILD_TYPE
       -o Mdt$COMPONENT:shared=$BUILD_SHARED_LIBS
     - conan user --password "${CI_JOB_TOKEN}" --remote scandyna ci_user
     - conan upload Mdt$COMPONENT/* --remote scandyna --all -c
@@ -47,7 +48,8 @@ Deploy_Conan_Linux_Gcc:
     - conan create packaging/conan/$COMPONENT scandyna/testing
       --profile:build "linux_${CONAN_PROFILE_COMPILER}_x86_64_libc++"
       --profile:host "linux_ubuntu-18.04_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_${CONAN_PROFILE_LIBCXX}_qt_widgets_modules_boost"
-      -s build_type=$BUILD_TYPE
+      #-s build_type=$BUILD_TYPE
+      --settings:build build_type=Release --settings:host build_type=$BUILD_TYPE
       -o Mdt$COMPONENT:shared=$BUILD_SHARED_LIBS
     - conan user --password "${CI_JOB_TOKEN}" --remote scandyna ci_user
     - conan upload Mdt$COMPONENT/* --remote scandyna --all -c
@@ -85,7 +87,8 @@ Deploy_Conan_Linux_Clang:
     - conan create packaging/conan/$COMPONENT scandyna/testing
       --profile:build "windows_${CONAN_PROFILE_COMPILER}_x86_64"
       --profile:host "windows_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_qt_widgets_modules_boost"
-      -s build_type=$BUILD_TYPE
+      #-s build_type=$BUILD_TYPE
+      --settings:build build_type=Release --settings:host build_type=$BUILD_TYPE
       -o "Mdt${COMPONENT}:shared=$BUILD_SHARED_LIBS"
     - conan user --password "${CI_JOB_TOKEN}" --remote scandyna ci_user
     - conan upload Mdt$COMPONENT/* --remote scandyna --all -c
@@ -120,7 +123,8 @@ Deploy_Conan_Windows_Gcc:
     - conan create packaging/conan/$COMPONENT scandyna/testing
       --profile:build "windows_${CONAN_PROFILE_COMPILER}_x86_64"
       --profile:host "windows_${CONAN_PROFILE_COMPILER}_${CONAN_PROFILE_ARCH}_qt_widgets_modules_boost"
-      -s build_type=$BUILD_TYPE
+      #-s build_type=$BUILD_TYPE
+      --settings:build build_type=Release --settings:host build_type=$BUILD_TYPE
       -o "Mdt${COMPONENT}:shared=$BUILD_SHARED_LIBS"
     - conan user --password "${CI_JOB_TOKEN}" --remote scandyna ci_user
     - conan upload Mdt$COMPONENT/* --remote scandyna --all -c

@@ -27,9 +27,15 @@ include:
   script:
     - !reference [.setup_conan, script]
     - conan create packaging/conan/$COMPONENT 0.0.0@scandyna/testing
-      --profile:build $CONAN_PROFILE_BUILD --profile:host $CONAN_PROFILE_HOST -s build_type=$BUILD_TYPE --test-folder None
+      #--profile:build $CONAN_PROFILE_BUILD --profile:host $CONAN_PROFILE_HOST -s build_type=$BUILD_TYPE --test-folder None
+      --profile:build $CONAN_PROFILE_BUILD --profile:host $CONAN_PROFILE_HOST
+      --settings:build build_type=Release --settings:host build_type=$BUILD_TYPE
+      #--options:host shared=$BUILD_SHARED_LIBS
+      --test-folder None
     - conan test packaging/conan/$COMPONENT/test_package Mdt$COMPONENT/0.0.0@scandyna/testing
-      --profile:build $CONAN_PROFILE_BUILD --profile:host $CONAN_PROFILE_HOST -s build_type=$BUILD_TYPE
+      #--profile:build $CONAN_PROFILE_BUILD --profile:host $CONAN_PROFILE_HOST -s build_type=$BUILD_TYPE
+      --profile:build $CONAN_PROFILE_BUILD --profile:host $CONAN_PROFILE_HOST
+      --settings:build build_type=Release --settings:host build_type=$BUILD_TYPE
 
 
 .deploy_conan_base:
