@@ -1,0 +1,28 @@
+
+include:
+  - local: 'ci_cd/GitLab/Conan_Templates.yml'
+  - local: 'ci_cd/GitLab/Common.yml'
+
+
+.conan_createAndTest_Windows:
+  extends:
+    - .conan_createAndTest
+    - .windows_runner
+
+
+########################################
+# Windows Gcc 8 x86_64
+########################################
+
+.conan_createAndTest_CommandLineParser_Windows_gcc8_x86_64:
+  image: registry.gitlab.com/scandyna/docker-images-windows/windows-cpp-win64_mingw81:latest
+  variables:
+    COMPONENT: CommandLineParser
+    CONAN_PROFILE_BUILD: windows_gcc8_x86_64
+    CONAN_PROFILE_HOST: windows_gcc8_x86_64_qt_widgets_modules_boost
+  extends: .conan_createAndTest_Windows
+
+conan_createAndTest_CommandLineParser_Windows_gcc8_x86_64_Debug:
+  variables:
+    BUILD_TYPE: Debug
+  extends: .conan_createAndTest_CommandLineParser_Windows_gcc8_x86_64
