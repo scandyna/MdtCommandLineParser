@@ -43,7 +43,7 @@ class MdtCommandLineParserConan(ConanFile):
     self.requires("MdtCMakeConfig/0.0.5@scandyna/testing")
     self.requires("qt/5.15.6")
     self.requires("boost/1.72.0")
-    self.requires("MdtCommandLineArguments/0.4.1@scandyna/testing")
+    self.requires("MdtCommandLineArguments/0.4.5@scandyna/testing")
 
   # When using --profile:build xx and --profile:host xx ,
   # the dependencies declared in build_requires and tool_requires
