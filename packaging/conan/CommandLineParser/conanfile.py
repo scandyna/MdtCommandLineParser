@@ -88,4 +88,5 @@ class MdtCommandLineParserConan(ConanFile):
   def package_info(self):
     self.cpp_info.set_property("cmake_file_name", "Mdt0CommandLineParser")
     self.cpp_info.set_property("cmake_target_name", "Mdt0::CommandLineParser")
+    self.cpp_info.requires = ["MdtCMakeConfig::MdtCMakeConfig", "MdtCommandLineArguments::MdtCommandLineArguments", "qt::qtCore", "boost::boost"]
     self.cpp_info.libs = ["Mdt0CommandLineParser"]
